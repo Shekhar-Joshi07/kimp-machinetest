@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Roles & Permissions Matrix Editor
+
+A Next.js application for managing role-based permissions through an interactive matrix interface.
+
+## Features
+
+- Interactive permissions matrix with roles as columns and permissions as rows
+- Individual cell toggles for granular permission control
+- Bulk row/column toggles with tri-state indicators
+- Real-time filtering by permission name
+- Optimistic updates with error rollback
+- Sticky headers for better UX on large matrices
+- Accessible keyboard navigation
 
 ## Getting Started
 
-First, run the development server:
-
+1. Install dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Set up your MongoDB connection in `.env`:
+```
+MONGODB_URL=your_mongodb_connection_string
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Start the development server:
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Seed the database with initial data:
+```bash
+npm run seed
+```
 
-## Learn More
+5. Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-To learn more about Next.js, take a look at the following resources:
+## API Endpoints
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `GET /api/roles` - Fetch all roles
+- `GET /api/permissions` - Fetch all permissions  
+- `GET /api/assignments` - Fetch all role-permission assignments
+- `PATCH /api/assignments/toggle` - Toggle individual permission
+- `PATCH /api/assignments/row` - Bulk toggle row (all permissions for a role)
+- `PATCH /api/assignments/column` - Bulk toggle column (all roles for a permission)
+- `POST /api/seed` - Seed database with initial data
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Usage
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Click individual cells to grant/revoke specific permissions
+- Click role headers to toggle all permissions for that role
+- Click permission headers to toggle that permission for all roles
+- Use the filter input to search permissions by name
+- Tri-state indicators show: ✓ (all), ◐ (partial), or empty (none)
